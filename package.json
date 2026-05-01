@@ -1,0 +1,17 @@
+{
+  "name": "barber-app",
+  "version": "1.0.0",
+  "description": "Aplicacion web sencilla para gestionar citas de una barberia.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "dev": "node --no-warnings server.js",
+    "reset-db": "node --no-warnings resetDatabase.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

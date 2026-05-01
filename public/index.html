@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Barberia | Citas</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand-row">
+          <div class="brand-mark">B</div>
+          <div>
+            <p class="eyebrow">Barberia</p>
+            <h1>Agenda movil</h1>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div>
+            <span class="hero-label">Hoy</span>
+            <strong id="todayBadge"></strong>
+          </div>
+          <div>
+            <span class="hero-label">Citas</span>
+            <strong id="todayCount">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <nav class="mobile-nav" aria-label="Secciones">
+        <a class="active" href="#new">Reservar</a>
+        <a href="#day">Agenda</a>
+        <a href="#customers">Clientes</a>
+      </nav>
+
+      <section id="new" class="panel">
+        <div class="section-title">
+          <span>Nueva cita</span>
+          <small>Reserva rapida</small>
+        </div>
+        <form id="appointmentForm" class="form">
+          <label>
+            Cliente
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="Nombre completo" required />
+          </label>
+          <label>
+            Telefono
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              inputmode="numeric"
+              pattern="[0-9]{9,}"
+              minlength="9"
+              placeholder="600000000"
+              required
+            />
+            <small id="clientHint" class="field-hint"></small>
+          </label>
+          <div id="clientSuggestions" class="client-suggestions"></div>
+          <label>
+            Servicio
+            <select id="service" name="service" required>
+              <option value="Corte">Corte</option>
+              <option value="Barba">Barba</option>
+              <option value="Corte + barba">Corte + barba</option>
+              <option value="Afeitado">Afeitado</option>
+              <option value="Arreglo">Arreglo</option>
+            </select>
+          </label>
+          <div class="date-row">
+            <label>
+              Fecha
+              <input id="date" name="date" type="date" required />
+            </label>
+          </div>
+          <input id="time" name="time" type="hidden" required />
+          <div class="slot-picker">
+            <div class="slot-picker-head">
+              <span>Hora disponible</span>
+              <small id="slotsHint">Intervalos de 30 min</small>
+            </div>
+            <div class="slot-legend" aria-hidden="true">
+              <span><i class="free"></i> Libre</span>
+              <span><i class="busy"></i> Ocupado</span>
+              <span><i class="picked"></i> Seleccionado</span>
+            </div>
+            <div id="slots" class="slots"></div>
+          </div>
+          <button type="submit">Guardar cita</button>
+        </form>
+      </section>
+
+      <section id="day" class="panel">
+        <div class="section-head">
+          <div class="section-title">
+            <span>Citas del dia</span>
+            <small>Vista diaria</small>
+          </div>
+          <div class="day-total">
+            <span>Total</span>
+            <strong id="dayTotal">0&euro;</strong>
+          </div>
+          <label class="date-filter">
+            <span>Ver</span>
+            <input id="filterDate" type="date" />
+          </label>
+        </div>
+        <div id="appointments" class="appointments"></div>
+      </section>
+
+      <section id="customers" class="panel">
+        <div class="section-title">
+          <span>Clientes</span>
+          <small>Base de datos</small>
+        </div>
+        <div id="clients" class="clients"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-tabs" aria-label="Accesos rapidos">
+      <a class="active" href="#new">Reservar</a>
+      <a href="#day">Agenda</a>
+      <a href="#customers">Clientes</a>
+    </nav>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
