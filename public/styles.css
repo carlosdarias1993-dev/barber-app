@@ -49,6 +49,14 @@ a {
   padding: 18px 14px 104px;
 }
 
+.hidden {
+  display: none !important;
+}
+
+.auth-view {
+  min-height: 100vh;
+}
+
 .topbar {
   display: grid;
   gap: 18px;

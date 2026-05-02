@@ -1,4 +1,11 @@
 const form = document.querySelector("#appointmentForm");
+const adminLogin = document.querySelector("#adminLogin");
+const adminApp = document.querySelector("#adminApp");
+const adminTabs = document.querySelector("#adminTabs");
+const adminLoginForm = document.querySelector("#adminLoginForm");
+const adminPassword = document.querySelector("#adminPassword");
+const adminLoginError = document.querySelector("#adminLoginError");
+const logoutButton = document.querySelector("#logoutButton");
 const appointmentsEl = document.querySelector("#appointments");
 const clientsEl = document.querySelector("#clients");
 const nameInput = document.querySelector("#name");
@@ -16,6 +23,8 @@ const todayBadge = document.querySelector("#todayBadge");
 const todayCount = document.querySelector("#todayCount");
 const dayTotal = document.querySelector("#dayTotal");
 const navLinks = document.querySelectorAll(".mobile-nav a, .bottom-tabs a");
+const ADMIN_PASSWORD = "1234";
+const ADMIN_SESSION_KEY = "barberAdminAuthenticated";
 
 const today = toDateInputValue(new Date());
 filterDate.value = today;
@@ -30,6 +39,30 @@ const STATUS_LABELS = {
   scheduled: "Pendiente"
 };
 const ACTIVE_STATUSES = ["pending", "confirmed", "scheduled"];
+
+function isAdminAuthenticated() {
+  return localStorage.getItem(ADMIN_SESSION_KEY) === "true";
+}
+
+function showAdminApp() {
+  adminLogin.classList.add("hidden");
+  adminApp.classList.remove("hidden");
+  adminTabs.classList.remove("hidden");
+}
+
+function showAdminLogin() {
+  adminApp.classList.add("hidden");
+  adminTabs.classList.add("hidden");
+  adminLogin.classList.remove("hidden");
+  adminPassword.value = "";
+  adminLoginError.textContent = "";
+  adminPassword.focus();
+}
+
+async function initAdminApp() {
+  showAdminApp();
+  await Promise.all([refresh(), loadSlots()]);
+}
 
 function toDateInputValue(date) {
   const year = date.getFullYear();
@@ -387,6 +420,23 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+adminLoginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (adminPassword.value === ADMIN_PASSWORD) {
+    localStorage.setItem(ADMIN_SESSION_KEY, "true");
+    await initAdminApp().catch((error) => showToast(error.message));
+    return;
+  }
+
+  adminLoginError.textContent = "Contraseña incorrecta.";
+  showToast("Contraseña incorrecta.");
+});
+
+logoutButton.addEventListener("click", () => {
+  localStorage.removeItem(ADMIN_SESSION_KEY);
+  showAdminLogin();
+});
+
 dateInput.addEventListener("change", () => {
   loadSlots().catch((error) => showToast(error.message));
 });
@@ -523,4 +573,8 @@ navLinks.forEach((link) => {
   });
 });
 
-Promise.all([refresh(), loadSlots()]).catch((error) => showToast(error.message));
+if (isAdminAuthenticated()) {
+  initAdminApp().catch((error) => showToast(error.message));
+} else {
+  showAdminLogin();
+}
