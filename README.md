@@ -38,6 +38,13 @@ La app quedara disponible en:
 http://localhost:3000
 ```
 
+Rutas principales:
+
+```txt
+/reservar  Vista publica para clientes
+/admin     Vista interna para barbero/admin
+```
+
 Tambien puedes usar:
 
 ```bash

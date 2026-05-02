@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Barberia | Reservar</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand-row">
+          <div class="brand-mark">B</div>
+          <div>
+            <p class="eyebrow">Barberia</p>
+            <h1>Reservar cita</h1>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div>
+            <span class="hero-label">Fecha</span>
+            <strong id="todayBadge"></strong>
+          </div>
+          <div>
+            <span class="hero-label">Servicio</span>
+            <strong id="serviceSummary">Corte</strong>
+          </div>
+        </div>
+      </header>
+
+      <nav class="mobile-nav" aria-label="Secciones">
+        <a class="active" href="/reservar">Reservar</a>
+      </nav>
+
+      <section id="new" class="panel">
+        <div class="section-title">
+          <span>Nueva cita</span>
+          <small>Elige servicio, dia y hora</small>
+        </div>
+        <form id="appointmentForm" class="form">
+          <label>
+            Cliente
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="Nombre completo" required />
+          </label>
+          <label>
+            Telefono
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              inputmode="numeric"
+              pattern="[0-9]{9,}"
+              minlength="9"
+              placeholder="600000000"
+              required
+            />
+            <small id="clientHint" class="field-hint"></small>
+          </label>
+          <label>
+            Servicio
+            <select id="service" name="service" required>
+              <option value="Corte">Corte</option>
+              <option value="Barba">Barba</option>
+              <option value="Corte + barba">Corte + barba</option>
+              <option value="Afeitado">Afeitado</option>
+              <option value="Arreglo">Arreglo</option>
+            </select>
+          </label>
+          <div class="date-row">
+            <label>
+              Fecha
+              <input id="date" name="date" type="date" required />
+            </label>
+          </div>
+          <input id="time" name="time" type="hidden" required />
+          <div class="slot-picker">
+            <div class="slot-picker-head">
+              <span>Hora disponible</span>
+              <small id="slotsHint">Intervalos de 30 min</small>
+            </div>
+            <div class="slot-legend" aria-hidden="true">
+              <span><i class="free"></i> Libre</span>
+              <span><i class="busy"></i> Ocupado</span>
+              <span><i class="picked"></i> Seleccionado</span>
+            </div>
+            <div id="slots" class="slots"></div>
+          </div>
+          <button type="submit">Reservar cita</button>
+        </form>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/reservar.js"></script>
+  </body>
+</html>

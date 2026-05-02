@@ -56,6 +56,19 @@ db.exec(`
 `);
 
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.redirect("/reservar");
+});
+
+app.get("/reservar", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "reservar.html"));
+});
+
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 const appointmentColumns = db.prepare("PRAGMA table_info(appointments)").all();
